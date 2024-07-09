@@ -7,13 +7,24 @@ export function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-
+  const [goal, setGoal] = useState("na");
+  const [amount, setAmount] = useState(0);
+  const [cycle, setCycle] = useState("na");
+  const [cycle_amount, setCycleAmount] = useState(0);
+  const [duration,setDuration] = useState(0);
+  const [upi,setupi] = useState("na");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
         name,
         email,
-        password
+        password,
+        goal,
+        amount,
+        cycle,
+        cycle_amount,
+        duration,
+        upi
       };
     try {
         const response = await axios.post('http://localhost:3000/signup', formData);
@@ -33,9 +44,9 @@ export function Signup() {
           setErrors(errorObj); // Set errors in state
         } else {
           alert(error.response.data.message);
-          setName("");
-          setPassword("");
-         setEmail("");
+        //   setName("");
+        //   setPassword("");
+        //  setEmail("");
            // Fallback error message
         }
       }

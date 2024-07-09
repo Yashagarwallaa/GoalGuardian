@@ -49,7 +49,7 @@ app.post('/signup',async(req,res)=>{
      userSchema.parse(req.body);
     //userSchema.parse(req.body);
 
-    const { name, email, password } = req.body;
+    const { name, email, password, goal, amount, cycle,cycle_amount,duration,upi } = req.body;
     // check if user exists
       const userExist = await db.collection('users').findOne({email:email});
       if(userExist){ //checking if email already exists
@@ -60,7 +60,7 @@ app.post('/signup',async(req,res)=>{
      const hashedPassword = await bcrypt.hash(password, 10);
 
      db.collection('users').insertOne({
-      name,email,password:hashedPassword
+      name,email,password:hashedPassword,goal, amount,cycle,cycle_amount,duration,upi
      },(err,collection)=>{
       if(err){
         throw err;
@@ -103,34 +103,25 @@ app.post('/login',async(req,res)=>{
       }
     
 
-      const token = jwt.sign({ id: userExist._id , name:userExist.name }, process.env.JWT_SECRET, {expiresIn:'20s'});
+      const token = jwt.sign({ _id: userExist._id , name:userExist.name }, process.env.JWT_SECRET, {expiresIn:'20s'});
       console.log(token);
       res.json({ message: 'Login successful', token });
     } catch (error) {
-      res.status(500).json({ message: 'Error logging in', error });
+      res.status(500).send({ message: 'Error logging in', error });
     }
   });
 
-  //dashboard private route
-function authenticateToken(req, res, next) {
-  console.log('Request Headers:', req);
-    // const authHeader = req.headers['authorization'];
-    // const token = authHeader && authHeader.split(' ')[1];
-  
-    // if (token == null) {
-    //   return res.status(401).json({ message: 'Access denied, token missing!', redirect: '/login' });
-    // }
-  
-    // jwt.verify(token, process.env.JWT_SECRET, (err, name) => {
-    //   if (err) {
-    //     return res.status(403).json({ message: 'Invalid token!', redirect: '/login' });
-    //   }
-    //   req.name = name;
-    //   next();
-    // });
-  }
-app.get('/dashboard',authenticateToken,(req,res)=>{
+  //dashboard user get
+app.get('/dashboard/user/:id',async(req,res)=>{
    // Add this line for debugging
-  res.status(200).json({message:"Welcome to Dashboard",name:req.name});
+  try{
+    const id = req.params.id;
+    console.log(id);
+    const data = await db.collection('users').findOne({ _id: new mongoose.Types.ObjectId(id)});
+    console.log(data);
+    return res.status(200).json({message:"User details sent successfully",data})
+  }catch(err){
+     console.log(err);
+  }
 })
   

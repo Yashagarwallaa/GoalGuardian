@@ -12,6 +12,12 @@ const userSchema = z.object({
     .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
     .regex(/[0-9]/, { message: "Password must contain at least one number" })
     .regex(/[^a-zA-Z0-9]/, { message: "Password must contain at least one special character" }),
+    goal: z.string().nullable().optional(),
+    amount: z.number().nullable().optional(),
+    cycle: z.string().nullable().optional(),
+    cycle_amount: z.number().nullable().optional(),
+    duration: z.number().nullable().optional(),
+    upi_detail: z.string().nullable().optional()
 });
 
 const mongooseUserSchema = new mongoose.Schema({
@@ -28,6 +34,30 @@ const mongooseUserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  goal:{
+    type: String,
+     required: false,
+  },
+  amount:{
+    type:Number,
+    required: false,
+  },
+  cycle:{
+    type:String,
+    required: false,
+  },
+  cycle_amount:{
+    type:Number,
+    required: false,
+  },
+  upi:{
+    type:String,
+    required : false,
+  } ,
+  duration:{
+    type:Number,
+    required:false
+  }
 });
 
 const UserModel = mongoose.model('User', mongooseUserSchema);

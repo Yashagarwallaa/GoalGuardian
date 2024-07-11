@@ -1,0 +1,107 @@
+.dashboard {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+  }
+  
+  .dashboard h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+  
+  .dashboard-form, .dashboard-info {
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid whitesmoke;
+    box-shadow: none;
+    max-width: 33%; 
+    margin: 0 auto;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+  }
+  
+  .dashboard-form h2 {
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #ddd;
+    font-size: 1.2rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%; /* Ensure input fields take full width of container */
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    background-color: #333;
+    color: #fff;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+  }
+  
+  .form-group select option {
+    color: #fff;
+  }
+  
+  .submit-btn, .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .submit-btn:hover, .edit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  @media (max-width: 1350px) {
+    .dashboard {
+      padding: 1rem;
+    }
+    
+    .dashboard-form, .dashboard-info {
+      padding: 1rem;
+      max-width: 80%;
+    }
+    
+    .dashboard h1 {
+      font-size: 2rem;
+    }
+    
+    .form-group label,
+    .form-group input,
+    .form-group select {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard h1 {
+      font-size: 1.5rem;
+    }
+    
+    .dashboard-form, .dashboard-info {
+      padding: 0.5rem;
+      max-width: 90%;
+    }
+  }
+  

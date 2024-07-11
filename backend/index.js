@@ -95,16 +95,13 @@ app.post('/login',async(req,res)=>{
       if(!userExist){ 
           return res.status(400).send({message:"Invalid username or passeord",error});
       }
-      console.log(userExist);
       const isPasswordValid = await bcrypt.compare(password, userExist.password);
-      console.log(isPasswordValid);
       if (!isPasswordValid) {
         return res.status(400).send({ message: 'Invalid email or password' ,error});
       }
     
 
       const token = jwt.sign({ _id: userExist._id , name:userExist.name }, process.env.JWT_SECRET, {expiresIn:'20s'});
-      console.log(token);
       res.json({ message: 'Login successful', token });
     } catch (error) {
       res.status(500).send({ message: 'Error logging in', error });
@@ -113,15 +110,30 @@ app.post('/login',async(req,res)=>{
 
   //dashboard user get
 app.get('/dashboard/user/:id',async(req,res)=>{
-   // Add this line for debugging
   try{
     const id = req.params.id;
-    console.log(id);
     const data = await db.collection('users').findOne({ _id: new mongoose.Types.ObjectId(id)});
-    console.log(data);
     return res.status(200).json({message:"User details sent successfully",data})
   }catch(err){
      console.log(err);
   }
 })
+
+//user goal post logic
+
+app.put('/dashboard/user/:id', async(req,res)=>{
+  try{
+      const id = req.params.id;
+      const {  goal, amount, cycle,cycle_amount,duration } = req.body;
+      const user = await db.collection('users').findOneAndUpdate(
+        { _id: new mongoose.Types.ObjectId(id) },
+        { $set: { goal, amount, cycle_amount, duration, cycle } },
+        { new: true } 
+      );
+      res.status(200).json({ message: "Goals details submitted", user });
+  }
+  catch(err){
+     res.status(400).json({message:"Error in submitting details", err});
+  }
+}) 
   

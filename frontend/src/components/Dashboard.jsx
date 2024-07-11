@@ -1,187 +1,178 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import './Dashboard.css';
+
 const Dashboard = () => {
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Check if token exists
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [user, setUser] = useState("");
-  const [userid,setID] = useState("");
+  const [userid, setID] = useState("");
   const [goal, setGoal] = useState("");
   const [amount, setAmount] = useState(0);
   const [cycle, setCycle] = useState("");
-  const [cycleAmount, setCycleAmount] = useState(0);
-  const [duration,setDuration] = useState(0);
-
-  const [loading, setLoading]  = useState(true);
+  const [cycle_amount, setCycleAmount] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
+  const [errors, setErrors] = useState({});
 
- const getUserFromToken = () => {
-    const token =  localStorage.getItem('token');
-      const decoded = jwtDecode(token);
-      return decoded;
+  const getUserFromToken = () => {
+    const token = localStorage.getItem('token');
+    return jwtDecode(token);
   };
 
- const fetchUserDetails = async (userid) => {
-  console.log(userid);
-    const response = await axios.get(`http://localhost:3000/dashboard/user/${userid}`)
-     const data = await response.data;
-    return data;
+  const fetchUserDetails = async (userid) => {
+    const response = await axios.get(`http://localhost:3000/dashboard/user/${userid}`);
+    return response.data;
   };
+
   useEffect(() => {
-    const userData =  getUserFromToken();
-    console.log(userData);
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+
+    const userData = getUserFromToken();
     if (userData) {
       setUser(userData.name);
       setID(userData._id);
-      fetchUserDetails(userid).then((data) => {
-        console.log(data.data.goal);
-
-        if (data.data.goal==="na" ) {
+      fetchUserDetails(userData._id).then((data) => {
+        if (data.data.goal === "na") {
           setFormVisible(true);
         } else {
-          setGoal(data.goal);
-          setAmount(data.amount);
-          setCycle(data.cycle);
-          setCycleAmount(data.cycleAmount);
-          setDuration(data.duration);
+          setGoal(data.data.goal);
+          setAmount(data.data.amount);
+          setCycle(data.data.cycle);
+          setCycleAmount(data.data.cycle_amount);
+          setDuration(data.data.duration);
         }
         setLoading(false);
       });
     } else {
       setLoading(false);
     }
-  }, [userid, user]);
+  }, [isLoggedIn, navigate]);
 
   const calculateCycleAmount = (amount, cycle, duration) => {
     switch (cycle) {
       case 'daily':
-        setCycleAmount(amount / duration);
+        return amount / duration;
       case 'weekly':
-        setCycleAmount(amount *7/ duration);
+        return (amount * 7) / duration;
       case 'monthly':
-        setCycleAmount(amount*30/duration);
+        return (amount * 30) / duration;
       default:
         return 0;
     }
   };
-  const handleFormSubmit = async (e)=>{
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const formData = {
       goal,
       amount,
       cycle,
-      cycleAmount,
+      cycle_amount: calculateCycleAmount(amount, cycle, duration),
       duration
     };
     try {
-      const response = await axios.post('http://localhost:3000/dashboard', formData);
-      alert(response.data.message);
-    setErrors({});
+      console.log(formData);
+      const response = await axios.put(`http://localhost:3000/dashboard/user/${userid}`, formData);
+      console.log(response.data.message);
+      setErrors({});
+      setFormVisible(false);
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        const backendErrors = error.response.data.errors;
+      if (error.response?.data?.errors) {
         const errorObj = {};
-        backendErrors.forEach((err) => {
+        error.response.data.errors.forEach((err) => {
           errorObj[err.path] = err.message;
           alert(err.message);
         });
-        setErrors(errorObj); // Set errors in state
-      } else {
- 
+        setErrors(errorObj);
+        console.log(error);
       }
     }
   };
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
-    <div className='login-container'>
-      {isLoggedIn ? (
-        <div>
-          <h1>Welcome to your dashboard, {user}</h1>
-          <div>
-            {formVisible ? (
-              <div>
-                <form onSubmit={handleFormSubmit}>
-                  <div>
-                    <label>
-                      Goal:
-                      <input
-                        type="text"
-                        name="goal"
-                        value={goal}
-                        onChange={(e) => {
-                          setGoal(e.target.value);
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      Amount:
-                      <input
-                        type="number"
-                        name="amount"
-                        value={amount}
-                        onChange={(e) => {
-                          setAmount(e.target.value);
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      Duration in days:
-                      <input
-                        type="number"
-                        name="duration"
-                        value={duration}
-                        onChange={(e) => {
-                          setDuration(e.target.value);
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      Cycle:
-                      <select
-                        name="cycle"
-                        value={cycle}
-                        onChange={(e) => {
-                          setCycle(e.target.value);
-                        }}
-                      >
-                        <option value="">Select cycle</option>
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      Cycle Amount: {calculateCycleAmount(amount, cycle, duration)}
-                    </label>
-                  </div>
-                  <button type="submit">Save</button>
-                </form>
-              </div>
-            ) : (
-              <div>
-                <p>Goal: {goal}</p>
-                <p>Amount: {amount}</p>
-                <p>Duration (in days): {duration}</p>
-                <p>Cycle: {cycle}</p>
-                <p>Cycle Amount: {calculateCycleAmount(amount, cycle, duration)}</p>
-              </div>
-            )}
-          </div>
+    <div className="dashboard">
+      <h1>Welcome to your dashboard, {user}</h1>
+      {formVisible ? (
+        <div className="dashboard-form">
+          <h2>Set Your Savings Goal</h2>
+          <form onSubmit={handleFormSubmit}>
+            <div className="form-group">
+              <label htmlFor="goal">Goal:</label>
+              <input
+                type="text"
+                id="goal"
+                name="goal"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="amount">Amount:</label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="duration">Duration (days):</label>
+              <input
+                type="number"
+                id="duration"
+                name="duration"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="cycle">Cycle:</label>
+              <select
+               type="text"
+                id="cycle"
+                name="cycle"
+                value={cycle}
+                onChange={(e) => setCycle(e.target.value)}
+              >
+                <option value="">Select cycle</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label type="number" name="cycle_amount" value={cycle_amount}>Cycle Amount: {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</label>
+            </div>
+            <button type="submit" className="submit-btn">Proceed </button>
+          </form>
         </div>
       ) : (
-        window.location.href = '/login'
+        <div className="dashboard-info">
+          <h2>Your Savings Goal</h2>
+          <p><strong>Goal:</strong> {goal}</p>
+          <p><strong>Amount:</strong> Rs {amount}</p>
+          <p><strong>Duration:</strong> {duration} days</p>
+          <p><strong>Cycle:</strong> {cycle}</p>
+          <p><strong>Cycle Amount:</strong> Rs {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</p>
+          <button onClick={() => setFormVisible(true)} className="edit-btn">Do you confirm?</button>
+        </div>
       )}
     </div>
   );
 };
 
 export default Dashboard;
+
+

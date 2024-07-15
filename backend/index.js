@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var cors = require('cors');
 var z = require('zod');
 var bcrypt = require('bcrypt');
+var schedule = require('./routes/schedule');
 require('dotenv').config();
 // var {authenticateToken} = require('./middlewares/authdashboard');
 
@@ -42,6 +43,8 @@ app.get('/',function(req,res){
     res.status(200).send("Hello from 3000 port")
 }).listen(3000);
 
+app.use('/schedule',schedule);
+
 //acount creation logic
 app.post('/signup',async(req,res)=>{
     try{
@@ -49,7 +52,7 @@ app.post('/signup',async(req,res)=>{
      userSchema.parse(req.body);
     //userSchema.parse(req.body);
 
-    const { name, email, password, goal, amount, cycle,cycle_amount,duration,upi } = req.body;
+    const { name, email, password, goal, amount, cycle,cycle_amount,duration,upi ,saved_amount} = req.body;
     // check if user exists
       const userExist = await db.collection('users').findOne({email:email});
       if(userExist){ //checking if email already exists
@@ -60,7 +63,7 @@ app.post('/signup',async(req,res)=>{
      const hashedPassword = await bcrypt.hash(password, 10);
 
      db.collection('users').insertOne({
-      name,email,password:hashedPassword,goal, amount,cycle,cycle_amount,duration,upi
+      name,email,password:hashedPassword,goal, amount:0,cycle:"",cycle_amount:0,duration:0,upi:"",saved_amount:0
      },(err,collection)=>{
       if(err){
         throw err;
@@ -120,7 +123,6 @@ app.get('/dashboard/user/:id',async(req,res)=>{
 })
 
 //user goal post logic
-
 app.put('/dashboard/user/:id', async(req,res)=>{
   try{
       const id = req.params.id;
@@ -137,3 +139,18 @@ app.put('/dashboard/user/:id', async(req,res)=>{
   }
 }) 
   
+//goal tracking logic
+app.put('/dashboard/user/schedule/:id', async(req,res)=>{
+  try{
+    const id = req.params.id;
+    const  {saved_amount}= req.body;
+    console.log(saved_amount);
+    const user = await db.collection('users').findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(id) },
+      { $set: { saved_amount } },
+    );
+    return res.status(200).send({ message: 'Saved amount updated successfully' });
+  }catch(err){
+    res.status(500).send("Failed to add amount to wallet");
+  }
+})

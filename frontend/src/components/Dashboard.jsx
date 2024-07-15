@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import './Dashboard.css';
-
+import RazorpayButton from './RazorpayButton';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -16,6 +16,8 @@ const Dashboard = () => {
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
+  const [tracker,setTracker] = useState(false);
+  const [startGoalbutton,setGoalButton] = useState(false);
   const [errors, setErrors] = useState({});
 
   const getUserFromToken = () => {
@@ -99,7 +101,23 @@ const Dashboard = () => {
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
+ 
 
+    const startGoal = async () => {
+      try {
+      
+        const response = await axios.post(`http://localhost:3000/schedule/start/${userid}`, cycle);
+        console.log(response.data); 
+  
+        alert('Scheduling started successfully!');
+         setTracker(true);
+         setGoalButton(true);
+      } catch (error) {
+        console.error('Error starting scheduling:', error);
+        alert('Failed to start scheduling. Please try again.');
+      }
+    };
+  
   return (
     <div className="dashboard">
       <h1>Welcome to your dashboard, {user}</h1>
@@ -158,7 +176,7 @@ const Dashboard = () => {
             <button type="submit" className="submit-btn">Proceed </button>
           </form>
         </div>
-      ) : (
+      ) : ( 
         <div className="dashboard-info">
           <h2>Your Savings Goal</h2>
           <p><strong>Goal:</strong> {goal}</p>
@@ -166,13 +184,24 @@ const Dashboard = () => {
           <p><strong>Duration:</strong> {duration} days</p>
           <p><strong>Cycle:</strong> {cycle}</p>
           <p><strong>Cycle Amount:</strong> Rs {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</p>
-          <button onClick={() => setFormVisible(true)} className="edit-btn">Do you confirm?</button>
+      <div> {startGoalbutton==false ?<button onClick={startGoal} className="edit-btn">Start Goal</button> : 
+      <div>
+        Tracker
+        </div>}</div>
+          {/* <form><RazorpayButton/></form> */}
         </div>
       )}
+      <div>
+        {tracker==true ? <div>
+              
+        </div>: <div></div>}
+      </div>
     </div>
+
+
+
   );
 };
 
 export default Dashboard;
-
 

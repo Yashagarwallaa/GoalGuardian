@@ -64,34 +64,29 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
       totalSavingTime.push(cycle_amount * i);
     }
 
-    // Shaded region between first and last saved amount points
-    const firstSavedAmount = savedAmountData[0];
-    const lastSavedAmount = savedAmountData[savedAmountData.length - 1];
-
     return {
       labels: totalTimeLine,
       datasets: [
         {
           label: 'Total Amount',
           data: totalSavingTime,
-          borderColor: 'rgba(255, 99, 132, 1)',
+          borderColor: 'rgba(255, 99, 132, 0.8)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderDash: [5, 5], 
         },
         {
           label: 'Saved Amount',
           data: savedAmountData,
-          borderColor: 'rgba(75, 192, 192, 1)', 
+          borderColor: 'rgba(255, 61, 0, 5)', 
           pointBackgroundColor: 'rgba(75, 192, 192, 1)',
           pointBorderColor: 'rgba(75, 192, 192, 1)',
           pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
           pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
           fill: {
-            // Fill between the first and last saved amount points
             target: 'origin',
-            above: 'rgb(75, 192, 192, 0.4)', // Color for the shaded region
+            above: 'rgb(75, 192, 192)',
           },
-          spanGaps: true, // Allow shading between gaps in data
-
+          spanGaps: true,
         },
       ],
     };
@@ -103,29 +98,29 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
     scales: {
       x: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // Change color of x-axis grid lines
+          color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: 'white', // Change color of x-axis labels
+          color: 'white',
         },
       },
       y: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // Change color of y-axis grid lines
+          color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: 'white', // Change color of y-axis labels
+          color: 'white',
         },
       },
     },
     plugins: {
       filler: {
-        propagate: true, // Propagate fill to all points
+        propagate: true,
       },
     },
     elements: {
       line: {
-        tension: 0.4, // Adjust tension for smoother lines
+        tension: 0.4,
       },
     },
   };

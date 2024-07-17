@@ -19,6 +19,8 @@ const Dashboard = () => {
   const [formVisible, setFormVisible] = useState(false);
   const [tracker,setTracker] = useState(false);
   const [startGoalbutton,setGoalButton] = useState(true);
+  const [rewards,setRewards] = useState(null);
+  const [saved_amount,setSavedAmount] = useState(0);
   const [errors, setErrors] = useState({});
 
   const getUserFromToken = () => {
@@ -50,6 +52,7 @@ const Dashboard = () => {
           setCycle(data.data.cycle);
           setCycleAmount(data.data.cycle_amount);
           setDuration(data.data.duration);
+          setSavedAmount(data.data.saved_amount);
         }
         setLoading(false);
         console.log(data.data.upi);
@@ -203,7 +206,10 @@ const Dashboard = () => {
                   Savings Chart
                    <LineChart amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
                 </div>
-                <div>Current Status</div>
+                <div>Current Status and Rewards
+                <p><strong>Saved Amount:</strong> {saved_amount}</p>
+                <p><strong>Rewards:</strong> {}</p>
+                </div>
               </div>
         </div>: <div></div>}
       </div>

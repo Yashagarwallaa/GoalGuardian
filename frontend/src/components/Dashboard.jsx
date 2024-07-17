@@ -4,6 +4,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import './Dashboard.css';
 import RazorpayButton from './RazorpayButton';
+import LineChart from './LineChart';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -17,7 +18,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
   const [tracker,setTracker] = useState(false);
-  const [startGoalbutton,setGoalButton] = useState(false);
+  const [startGoalbutton,setGoalButton] = useState(true);
   const [errors, setErrors] = useState({});
 
   const getUserFromToken = () => {
@@ -51,6 +52,11 @@ const Dashboard = () => {
           setDuration(data.data.duration);
         }
         setLoading(false);
+        console.log(data.data.upi);
+        if(data.data.upi === "ok"){
+          setGoalButton(false);
+          setTracker(true);
+        }
       });
     } else {
       setLoading(false);
@@ -105,13 +111,13 @@ const Dashboard = () => {
 
     const startGoal = async () => {
       try {
-      
-        const response = await axios.post(`http://localhost:3000/schedule/start/${userid}`, cycle);
+        const start = await axios.put(`http://localhost:3000/setupi/${userid}`, {upi:'ok'})
+        const response = await axios.post(`http://localhost:3000/schedule/start/${userid}`, {cycle});
         console.log(response.data); 
   
         alert('Scheduling started successfully!');
          setTracker(true);
-         setGoalButton(true);
+         setGoalButton(false);
       } catch (error) {
         console.error('Error starting scheduling:', error);
         alert('Failed to start scheduling. Please try again.');
@@ -184,16 +190,21 @@ const Dashboard = () => {
           <p><strong>Duration:</strong> {duration} days</p>
           <p><strong>Cycle:</strong> {cycle}</p>
           <p><strong>Cycle Amount:</strong> Rs {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</p>
-      <div> {startGoalbutton==false ?<button onClick={startGoal} className="edit-btn">Start Goal</button> : 
+      <div> {startGoalbutton==true ?<button onClick={startGoal} className="edit-btn">Start Goal</button> : 
       <div>
-        Tracker
         </div>}</div>
           {/* <form><RazorpayButton/></form> */}
         </div>
       )}
       <div>
         {tracker==true ? <div>
-              
+              <div> Tracker
+                <div>
+                  Savings Chart
+                   <LineChart amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
+                </div>
+                <div>Current Status</div>
+              </div>
         </div>: <div></div>}
       </div>
     </div>

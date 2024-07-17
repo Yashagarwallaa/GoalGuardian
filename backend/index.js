@@ -154,3 +154,22 @@ app.put('/dashboard/user/schedule/:id', async(req,res)=>{
     res.status(500).send("Failed to add amount to wallet");
   }
 })
+
+//set upi--ok 
+app.put('/setupi/:id', async(req,res)=>{
+  try{
+    const id = req.params.id;
+    const {  upi} = req.body;
+    console.log(upi);
+    const user = await db.collection('users').findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(id) },
+      { $set: { upi } },
+      { new: true } 
+    );
+    console.log(user);
+    res.status(200).json({ message: "Saving started successfully", user });
+}
+catch(err){
+   res.status(400).json({message:"Error in starting your saving journey", err});
+}
+})

@@ -10,15 +10,12 @@ const db = mongoose.connection;
 // Example function to be scheduled
 const scheduledTask = async (id) => {
   try {
-    // Example: Fetch user from database by ID
     const user = await db.collection('users').findOne({_id: new mongoose.Types.ObjectId(id)});
-    // Example: Process user
-    // Check condition (e.g., total_money_deducted >= goal)
+  
     if (user.saved_amount >= user.amount) {
       console.log(`${user.name} has reached their savings goal for ${user.goal}.`);
     } else {
-      // Deduct money based on user's cycle_amount
-      
+
       const x = user.saved_amount+user.cycle_amount;
    
       saved_amount = x;
@@ -42,20 +39,20 @@ const scheduledTask = async (id) => {
 router.post('/start/:userid', (req, res) => {
   try {
     const { userid} = req.params;
-    const cycle = req.body;
-
+    const {cycle} = req.body;
+      
     // Scheduling the task to run at at this time
     if(cycle=="daily"){
-    cron.schedule('02 06 * * *', () => {
+    cron.schedule('53 07 * * *', () => {
         scheduledTask(userid);
     });}
     else if(cycle =="monthly"){
-      cron.schedule('01 06 16 * *', () => {
+      cron.schedule('02 09 17 * *', () => {
         scheduledTask(userid);
     });
   }
     else if(cycle =="weekly"){
-      cron.schedule('00 06 * * 2', () => {
+      cron.schedule('55 07 * * 2', () => {
         scheduledTask(userid);
     });
     }

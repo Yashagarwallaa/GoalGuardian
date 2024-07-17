@@ -17,7 +17,7 @@ const userSchema = z.object({
     cycle: z.string().nullable().optional(),
     cycle_amount: z.number().nullable().optional(),
     duration: z.number().nullable().optional(),
-    upi_detail: z.string().nullable().optional(),
+    upi: z.string().nullable().optional(),
     saved_amount:z.number().optional()
 });
 

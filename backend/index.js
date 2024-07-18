@@ -52,7 +52,7 @@ app.post('/signup',async(req,res)=>{
      userSchema.parse(req.body);
     //userSchema.parse(req.body);
 
-    const { name, email, password, goal, amount, cycle,cycle_amount,duration,upi ,saved_amount} = req.body;
+    const { name, email, password, goal, amount, cycle,cycle_amount,duration,upi ,saved_amount,rewards} = req.body;
     // check if user exists
       const userExist = await db.collection('users').findOne({email:email});
       if(userExist){ //checking if email already exists
@@ -63,7 +63,7 @@ app.post('/signup',async(req,res)=>{
      const hashedPassword = await bcrypt.hash(password, 10);
 
      db.collection('users').insertOne({
-      name,email,password:hashedPassword,goal, amount:0,cycle:"",cycle_amount:0,duration:0,upi:"",saved_amount:0
+      name,email,password:hashedPassword,goal, amount:0,cycle:"",cycle_amount:0,duration:0,upi:"",saved_amount:0,reward:0,
      },(err,collection)=>{
       if(err){
         throw err;
@@ -143,11 +143,11 @@ app.put('/dashboard/user/:id', async(req,res)=>{
 app.put('/dashboard/user/schedule/:id', async(req,res)=>{
   try{
     const id = req.params.id;
-    const  {saved_amount}= req.body;
+    const  {saved_amount,reward}= req.body;
     console.log(saved_amount);
     const user = await db.collection('users').findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(id) },
-      { $set: { saved_amount } },
+      { $set: { saved_amount , reward} },
     );
     return res.status(200).send({ message: 'Saved amount updated successfully' });
   }catch(err){

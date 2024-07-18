@@ -72,7 +72,20 @@
   .submit-btn:hover, .edit-btn:hover {
     background-color: #45a049;
   }
-  
+  .tracker{
+    margin: 0 2.5vw 0 2.5vw;
+  }
+  .tracker-content{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
+  .tracker-head{
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
   @media (max-width: 1350px) {
     .dashboard {
       padding: 1rem;

@@ -18,7 +18,8 @@ const userSchema = z.object({
     cycle_amount: z.number().nullable().optional(),
     duration: z.number().nullable().optional(),
     upi: z.string().nullable().optional(),
-    saved_amount:z.number().optional()
+    saved_amount:z.number().optional(),
+    rewards:z.number().optional()
 });
 
 const mongooseUserSchema = new mongoose.Schema({
@@ -61,7 +62,11 @@ const mongooseUserSchema = new mongoose.Schema({
   },
   saved_amount:{
     type:Number,
-    trequired:false
+    required:false
+  },
+  rewards:{
+    type:Number,
+    required:false
   }
 });
 

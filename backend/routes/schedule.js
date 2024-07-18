@@ -15,12 +15,19 @@ const scheduledTask = async (id) => {
     if (user.saved_amount >= user.amount) {
       console.log(`${user.name} has reached their savings goal for ${user.goal}.`);
     } else {
+      let y  =0;
+      let x = 0;
+      if(user.saved_amount > user.amount){
+         y = 0.1*(user.cycle_amount);
+          x = user.saved_amount+0.9*user.cycle_amount + y ;
+          y = user.reward+0.1*(user.cycle_amount);
+      }
+      else x = user.saved_amount+user.cycle_amount;
 
-      const x = user.saved_amount+user.cycle_amount;
-   
       saved_amount = x;
+      reward = y;
       const response = await axios.put(
-        `http://localhost:3000/dashboard/user/schedule/${id}`, {saved_amount},
+        `http://localhost:3000/dashboard/user/schedule/${id}`, {saved_amount,reward},
         {
             headers: {
               'Content-Type': 'application/json', 
@@ -43,16 +50,16 @@ router.post('/start/:userid', (req, res) => {
       
     // Scheduling the task to run at at this time
     if(cycle=="daily"){
-    cron.schedule('53 07 * * *', () => {
+    cron.schedule('18 15 * * *', () => {
         scheduledTask(userid);
     });}
     else if(cycle =="monthly"){
-      cron.schedule('02 09 17 * *', () => {
+      cron.schedule('05 15 18 * *', () => {
         scheduledTask(userid);
     });
   }
     else if(cycle =="weekly"){
-      cron.schedule('55 07 * * 2', () => {
+      cron.schedule('20 15 * * 4', () => {
         scheduledTask(userid);
     });
     }

@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [formVisible, setFormVisible] = useState(false);
   const [tracker,setTracker] = useState(false);
   const [startGoalbutton,setGoalButton] = useState(true);
-  const [rewards,setRewards] = useState(null);
+  const [rewards,setRewards] = useState(0);
   const [saved_amount,setSavedAmount] = useState(0);
   const [errors, setErrors] = useState({});
 
@@ -53,6 +53,7 @@ const Dashboard = () => {
           setCycleAmount(data.data.cycle_amount);
           setDuration(data.data.duration);
           setSavedAmount(data.data.saved_amount);
+          setRewards(data.data.reward);
         }
         setLoading(false);
         console.log(data.data.upi);
@@ -201,14 +202,16 @@ const Dashboard = () => {
       )}
       <div>
         {tracker==true ? <div>
-              <div> Tracker
+              <div className='tracker' > <h2 className='tracker-head'> Tracker</h2>
+              <div className='tracker-content'>
                 <div>
                   Savings Chart
-                   <LineChart amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
+                   <LineChart reward = {rewards} amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
                 </div>
                 <div>Current Status and Rewards
-                <p><strong>Saved Amount:</strong> {saved_amount}</p>
-                <p><strong>Rewards:</strong> {}</p>
+                <p><strong>Saved Amount : </strong> Rs {saved_amount}</p>
+                <p><strong>Rewards : </strong> Rs {rewards}</p>
+                </div>
                 </div>
               </div>
         </div>: <div></div>}

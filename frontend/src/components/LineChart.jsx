@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
-
+import './LineChart.css'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
+const SavingsChart = ({ reward,amount, id, cycle_amount, cycle }) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -45,6 +45,8 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
         scale = 1;
     }
     let noOfSavingtimes = saved_amount / cycle_amount;
+    let savedAmountwithOutRewards=[];
+    savedAmountwithOutRewards.push(0);
     let savedAmountData = [];
     savedAmountData.push(0);
     for (let i = 1; i <= noOfSavingtimes; i++) {
@@ -53,9 +55,11 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
 
     const noOfTotaltimes = amount / cycle_amount;
     let totalTimeLine = [];
-    totalTimeLine.push(`Day ${0}`)
+    totalTimeLine.push(`${0}`)
     for (let i = 1; i <= noOfTotaltimes; i++) {
-      totalTimeLine.push(`Day ${i * scale }`);
+      totalTimeLine.push(`${i * scale }`);
+      if(i<=noOfTotaltimes/2)savedAmountwithOutRewards.push(cycle_amount*i);
+      else savedAmountwithOutRewards.push(0.9*cycle_amount*i);
     }
 
     let totalSavingTime = [];
@@ -73,20 +77,31 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
           borderColor: 'rgba(255, 99, 132, 0.8)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           borderDash: [5, 5], 
+          pointRadius: 0, 
+          pointHoverRadius: 0, 
         },
         {
           label: 'Saved Amount',
           data: savedAmountData,
           borderColor: 'rgba(255, 61, 0, 5)', 
-          pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-          pointBorderColor: 'rgba(75, 192, 192, 1)',
-          pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
-          pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
+          pointBackgroundColor: 'rgba(255, 61, 0, 5)',
+          pointBorderColor: 'rgba(255, 61, 0, 5)',
+          pointHoverBackgroundColor: 'rgba(255, 61, 0, 5)',
+          pointHoverBorderColor: 'rgba(255, 61, 0, 5)',
           fill: {
             target: 'origin',
             above: 'rgb(75, 192, 192)',
           },
           spanGaps: true,
+        },
+        {
+          label: 'Saved Amount without Rewards',
+          data: savedAmountwithOutRewards,
+          borderColor: 'rgba(57,255,20, 0.8)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderDash: [5, 5], 
+          pointRadius: 0, 
+          pointHoverRadius: 0, 
         },
       ],
     };
@@ -103,6 +118,11 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
         ticks: {
           color: 'white',
         },
+        title:{
+          display: true,
+          text: 'Days',
+          color :'orange'
+      }
       },
       y: {
         grid: {
@@ -111,6 +131,12 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
         ticks: {
           color: 'white',
         },
+        title:{
+          display: true,
+          text: 'Amount (in Rs)',
+          color :'orange'
+
+      }
       },
     },
     plugins: {
@@ -125,7 +151,7 @@ const SavingsChart = ({ amount, id, cycle_amount, cycle }) => {
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return <Line  data={chartData} options={options} />;
 };
 
 export default SavingsChart;

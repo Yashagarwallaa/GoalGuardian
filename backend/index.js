@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ // for url-encoded requests
     extended:true
 }))
 
+let port = process.env.PORT || 3000;
 
 
 const uri = process.env.MONG0_URI;
@@ -41,7 +42,7 @@ app.get('/',function(req,res){
         "Allow-access-Allow-Origin": "*" //something related to cors
     })
     res.status(200).send("Hello from 3000 port")
-}).listen(3000);
+}).listen(port);
 
 app.use('/schedule',schedule);
 

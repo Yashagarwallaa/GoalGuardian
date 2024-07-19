@@ -82,12 +82,15 @@ body {
     font-size: 1.6rem;
     color: white;
     background: lightgrey;
-    border: 1px solid white;
+    border: 3px solid white;
     padding: 0.5rem;
     cursor: pointer;
     margin-left: auto;
+    
   }
-
+  /* .desktop-auth {
+    display: none;
+  } */
   .nav-links {
     display: none;
     flex-direction: column;
@@ -109,6 +112,9 @@ body {
   }
 
   .sign-in {
-    display: none;
+    font-size: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.8rem;
+    font-family: 'Poppins','sans-serif';
   }
 }

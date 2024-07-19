@@ -28,7 +28,8 @@ export function Signup() {
     localStorage.setItem('token', token); // Storing the token in localStorage
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
-    alert(response.data.message + '. Please go to dashboard.'); 
+     alert(response.data.message + '. Please go to dashboard.'); 
+
     navigate('/')
 
     if (/Mobi|Android/i.test(navigator.userAgent)) {
@@ -37,6 +38,8 @@ export function Signup() {
     } else {
       window.location.reload();
     }
+
+
   } catch (error) {
     alert(error.response.data.message);
   }
@@ -120,7 +123,6 @@ export function Signup() {
           />
         </div>
         <button type="submit" className="login-button">Signup</button>
-        <button type="button" onClick={demoentry} className="guest-button">Go for Demo</button>
       </form>
     </div>
   );

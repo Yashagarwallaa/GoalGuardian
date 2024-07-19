@@ -19,20 +19,20 @@ export function Home() {
       <h2 className="features-title">What we offer.</h2>
       <div className="features-grid">
         <div className="feature-card">
-          <h3>Calculator</h3>
+          <h3>calculator</h3>
           <p>To give you a precise data regarding your savings/investment.</p>
         </div>
         <div className="feature-card">
-          <h3>Tracker</h3>
+          <h3>tracker</h3>
           <p>Goal tracking helps you to analyse your developments.</p>
         </div>
         <div className="feature-card">
-          <h3>Rewards</h3>
-          <p>Get your dream goal at a discounted rate than market value.</p>
+          <h3>rewards</h3>
+          <p>Unlock huge rewards after completing 50% of your goal with us</p>
         </div>
         <div className="feature-card">
-          <h3>First Goal?</h3>
-          <p>We will cover 10% upto Rs 5000 on your goal. <a href="#" className="create-account">Create your account.</a></p>
+          <h3>short term goals</h3>
+          <p>We will cover upto 5% of your total amount <a href="#" className="create-account">Create your account.</a></p>
         </div>
       </div>
     </div>

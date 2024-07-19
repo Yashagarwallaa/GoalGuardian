@@ -3,14 +3,17 @@ import './Footer.css';
 
 export function Footer()  {
   return (
+  <>
     <footer className="footer">
+    <hr/>
+
       <div className="footer-container">
         <div className="footer-section quick-links">
           <h3>Quick links</h3>
           <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/about-us">About us</a></li>
-            <li><a href="/create-account">Create Account</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/aboutus">About us</a></li>
+            <li><a href="/signup">Create Account</a></li>
           </ul>
         </div>
         <div className="footer-section support">
@@ -51,6 +54,7 @@ export function Footer()  {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

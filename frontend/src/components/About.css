@@ -1,0 +1,59 @@
+.about {
+    margin-left: 10rem;
+    margin-right: 10rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.about-head {
+    color: orange;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.about-des {
+    color: white;
+    font-size: 1.25rem;
+}
+
+.about-des b {
+    color: rgb(57, 255, 20);
+}
+
+.about-des a {
+    color: rgb(57, 200, 255);
+    text-decoration: none;
+}
+
+.about-des a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive styles for max-width 1350px */
+@media(max-width: 1350px) {
+    .about {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+
+    .about-des {
+        font-size: 1.1rem;
+    }
+}
+
+/* Responsive styles for max-width 480px */
+@media  (max-width: 480px) {
+    .about {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .about-head {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .about-des {
+        font-size: 1rem;
+    }
+}

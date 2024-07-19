@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard.jsx';
 import { RouterProvider, Route } from 'react-router-dom';
 import { createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import About from './components/About.jsx';
-import Contact from './components/Contact.jsx';
+import Calculator from './components/Calculator.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,8 +18,9 @@ const router = createBrowserRouter(
       <Route path="signup" element={<Signup />} />
       <Route path="about" element={<About />} />
       <Route path="dashboard" element={<Dashboard />} />
-      <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
+      <Route path="calculator" element={<Calculator />} />
+
     </Route>
   )
 );

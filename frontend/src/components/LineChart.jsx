@@ -72,7 +72,7 @@ const SavingsChart = ({ reward,amount, id, cycle_amount, cycle }) => {
       labels: totalTimeLine,
       datasets: [
         {
-          label: 'Total Amount',
+          label: 'Saving Journey',
           data: totalSavingTime,
           borderColor: 'rgba(255, 99, 132, 0.8)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',

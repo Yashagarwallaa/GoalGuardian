@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-
+import logoimage from '../assets/gg_icon.jpg'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +22,8 @@ export function Navbar() {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-left">
-            <Link to="/" onClick={() => setIsOpen(false)}>
-              <img src="logo.png" alt="Logo" className="logo" />
+            <Link to="/"  onClick={() => setIsOpen(false)}>
+              <img  style={{width:'3rem'}} src={logoimage} alt="Logo" className="" />
             </Link>
           </div>
           <div className="navbar-center">
@@ -49,11 +49,7 @@ export function Navbar() {
             )}
                
               </li>
-              <li>
-                <Link to="/about" onClick={() => setIsOpen(false)}>
-                  Contact Us
-                </Link>
-              </li>
+            
               
             </ul>
           </div>

@@ -186,30 +186,32 @@ const Dashboard = () => {
             <button type="submit" className="submit-btn">Proceed </button>
           </form>
         </div>
-      ) : ( 
+      ) : ( <div>
+        <h2 className='goal-summary'>Goal Summary</h2>
+
         <div className="dashboard-info">
-          <h2>Your Savings Goal</h2>
-          <p><strong>Goal:</strong> {goal}</p>
-          <p><strong>Amount:</strong> Rs {amount}</p>
-          <p><strong>Duration:</strong> {duration} days</p>
-          <p><strong>Cycle:</strong> {cycle}</p>
-          <p><strong>Cycle Amount:</strong> Rs {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</p>
+          <p ><strong>Goal : </strong> {goal} </p>
+          <p><strong>Amount : </strong> Rs {amount}</p>
+          <p><strong>Duration : </strong> {duration} days</p>
+          <p><strong>Cycle : </strong> {cycle}</p>
+          <p><strong>Cycle Amount : </strong> Rs {calculateCycleAmount(amount, cycle, duration).toFixed(2)}</p>
       <div> {startGoalbutton==true ?<button onClick={startGoal} className="edit-btn">Start Goal</button> : 
       <div>
         </div>}</div>
           {/* <form><RazorpayButton/></form> */}
         </div>
+        </div>
       )}
       <div>
-        {tracker==true ? <div>
+        {tracker==true ? <div >
               <div className='tracker' > <h2 className='tracker-head'> Tracker</h2>
               <div className='tracker-content'>
-                <div>
-                  Savings Chart
-                   <LineChart reward = {rewards} amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
-                </div>
-                <div>Current Status and Rewards
-                <p><strong>Saved Amount : </strong> Rs {saved_amount}</p>
+                <div className='chart'>
+                 <div className='chart-head'>Savings Chart</div> 
+                   <LineChart  reward = {rewards} amount = {amount} id = {userid}  cycle_amount = {cycle_amount} cycle = {cycle} /> 
+                </div> 
+                <div > <div style={{marginBottom:'1rem', fontStyle:'oblique' }}> Current Status and Rewards</div>
+                <p style={{marginBottom:'0.3rem'}}><strong >Saved Amount : </strong> Rs {saved_amount}</p>
                 <p><strong>Rewards : </strong> Rs {rewards}</p>
                 </div>
                 </div>

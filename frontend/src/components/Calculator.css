@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+.center-meh-boi {
+  font-family: 'Lato', sans-serif;
+  padding: 2rem;
+}
+
+.form-calci-part {
+  margin-bottom: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.calci-btn {
+  color: white;
+  font-size: large;
+  padding: 0.5rem;
+  margin-left: 5rem;
+  margin-top: 1rem;
+margin-bottom: 2rem;
+}
+
+.results {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid orange;
+  border-radius: 0.5rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.input-lg {
+  font-size: 16px;
+  padding: 10px;
+}
+
+@media (max-width: 1350px) {
+  .center-meh-boi {
+    padding: 1rem;
+  }
+  
+  .results {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .center-meh-boi {
+    padding: 0.5rem;
+  }
+  
+  .input-lg {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .results {
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+}

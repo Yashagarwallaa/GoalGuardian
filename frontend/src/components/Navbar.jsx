@@ -1,9 +1,10 @@
 import React, { useState ,useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logoimage from '../assets/gg_icon.jpg'
 
 export function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Check if token exists
@@ -19,6 +20,7 @@ export function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('token'); // Clearing token from localStorage
     setIsLoggedIn(false); // Updated login state
+    navigate('/');
     window.location.reload();
   };
 

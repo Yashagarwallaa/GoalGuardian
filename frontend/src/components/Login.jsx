@@ -21,7 +21,7 @@ export function Login() {
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
     alert(response.data.message); 
-    navigate('/dashboard')
+    navigate('/')
 
     window.location.reload();
 
@@ -43,7 +43,7 @@ export function Login() {
      
        axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
       alert(response.data.message); 
-      navigate('/dashboard')
+      navigate('/')
 
       window.location.reload();
 

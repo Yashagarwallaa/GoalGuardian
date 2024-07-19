@@ -23,7 +23,12 @@ export function Login() {
     alert(response.data.message); 
     navigate('/')
 
-    window.location.reload();
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      // Mobile-specific refresh method
+      window.location = window.location.href;
+    } else {
+      window.location.reload();
+    }
 
 
   } catch (error) {
@@ -45,7 +50,12 @@ export function Login() {
       alert(response.data.message); 
       navigate('/')
 
-      window.location.reload();
+      if (/Mobi|Android/i.test(navigator.userAgent)) {
+        // Mobile-specific refresh method
+        window.location = window.location.href;
+      } else {
+        window.location.reload();
+      }
 
     } catch (error) {
       alert(error.response.data.message);

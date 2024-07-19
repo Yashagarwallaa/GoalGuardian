@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useEffect, useState } from 'react';
 import './Login.css';
 import axios from 'axios';
@@ -17,11 +16,11 @@ export function Login() {
     try {
       const response = await axios.post('http://localhost:3000/login', formData);
       const token = response.data.token;
-      localStorage.setItem('token', token); // Store the token in localStorage
+      localStorage.setItem('token', token); // Storing the token in localStorage
      
        axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
-      alert(response.data.message); // Display success message from backend
-      window.location.href = '/dashboard'; // Redirect to the dashboard
+      alert(response.data.message); 
+      window.location.href = '/dashboard'; // Redirecting to the dashboard
     } catch (error) {
       alert(error.response.data.message);
     }

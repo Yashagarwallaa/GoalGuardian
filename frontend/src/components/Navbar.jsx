@@ -12,8 +12,8 @@ export function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear token from localStorage
-    setIsLoggedIn(false); // Update login state
+    localStorage.removeItem('token'); // Clearing token from localStorage
+    setIsLoggedIn(false); // Updated login state
     window.location.reload();
   };
 

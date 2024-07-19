@@ -31,7 +31,7 @@
     box-shadow: none;
     max-width: 33%; 
     margin: 0 auto;
-    box-sizing: border-box; /* Ensures padding is included in the width */
+    box-sizing: border-box; 
   }
   
   .dashboard-form h2 {
@@ -52,13 +52,13 @@
   
   .form-group input,
   .form-group select {
-    width: 100%; /* Ensure input fields take full width of container */
+    width: 100%; 
     padding: 0.75rem;
     border-radius: 4px;
     font-size: 1.2rem;
     background-color: #333;
     color: #fff;
-    box-sizing: border-box; /* Ensures padding is included in the width */
+    box-sizing: border-box; 
   }
   
   .form-group select option {

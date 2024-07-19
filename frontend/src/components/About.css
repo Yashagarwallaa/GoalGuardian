@@ -28,7 +28,7 @@
     text-decoration: underline;
 }
 
-/* Responsive styles for max-width 1350px */
+
 @media(max-width: 1350px) {
     .about {
         margin-left: 5rem;
@@ -40,7 +40,7 @@
     }
 }
 
-/* Responsive styles for max-width 480px */
+
 @media  (max-width: 480px) {
     .about {
         margin-left: 2rem;

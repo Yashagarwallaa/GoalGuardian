@@ -60,7 +60,7 @@ export function Navbar() {
               </button>
             ) : (
               <Link to="/login">
-                <button className="sign-in">Sign In</button>
+                <button className="sign-in">Sign In/Demo</button>
               </Link>
             )}
             <button className="menu-toggle" onClick={toggleMenu}>

@@ -13,6 +13,25 @@ export function Signup() {
   const [cycle_amount, setCycleAmount] = useState(0);
   const [duration,setDuration] = useState(0);
   const [upi,setupi] = useState("na");
+
+  const demoentry = async()=>{
+    const formData = {
+      email: 'demo@gg.com',
+      password : 'Demo_01'
+    };
+  try {
+    const response = await axios.post('http://localhost:3000/login', formData);
+    const token = response.data.token;
+    localStorage.setItem('token', token); // Storing the token in localStorage
+   
+     axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
+    alert(response.data.message); 
+    window.location.href = '/dashboard'; // Redirecting to the dashboard
+  } catch (error) {
+    alert(error.response.data.message);
+  }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -91,7 +110,7 @@ export function Signup() {
           />
         </div>
         <button type="submit" className="login-button">Signup</button>
-        <button type="button" className="guest-button">Go for Demo</button>
+        <button type="button" onClick={demoentry} className="guest-button">Go for Demo</button>
       </form>
     </div>
   );

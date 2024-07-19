@@ -20,7 +20,7 @@ export function Signup() {
       password : 'Demo_01'
     };
   try {
-    const response = await axios.post('http://localhost:3000/login', formData);
+    const response = await axios.post('https://goalguardian-backend.onrender.com/login', formData);
     const token = response.data.token;
     localStorage.setItem('token', token); // Storing the token in localStorage
    
@@ -46,7 +46,7 @@ export function Signup() {
         upi
       };
     try {
-        const response = await axios.post('http://localhost:3000/signup', formData);
+        const response = await axios.post('https://goalguardian-backend.onrender.com/signup', formData);
         alert(response.data.message);
         setName("");
        setPassword("");

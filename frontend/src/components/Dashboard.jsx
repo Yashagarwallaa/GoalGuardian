@@ -29,7 +29,7 @@ const Dashboard = () => {
   };
 
   const fetchUserDetails = async (userid) => {
-    const response = await axios.get(`http://localhost:3000/dashboard/user/${userid}`);
+    const response = await axios.get(`https://goalguardian-backend.onrender.com/dashboard/user/${userid}`);
     return response.data;
   };
 
@@ -91,7 +91,7 @@ const Dashboard = () => {
     };
     try {
       console.log(formData);
-      const response = await axios.put(`http://localhost:3000/dashboard/user/${userid}`, formData);
+      const response = await axios.put(`https://goalguardian-backend.onrender.com/dashboard/user/${userid}`, formData);
       console.log(response.data.message);
       setErrors({});
       setFormVisible(false);
@@ -115,8 +115,8 @@ const Dashboard = () => {
 
     const startGoal = async () => {
       try {
-        const start = await axios.put(`http://localhost:3000/setupi/${userid}`, {upi:'ok'})
-        const response = await axios.post(`http://localhost:3000/schedule/start/${userid}`, {cycle});
+        const start = await axios.put(`https://goalguardian-backend.onrender.com/setupi/${userid}`, {upi:'ok'})
+        const response = await axios.post(`https://goalguardian-backend.onrender.com/schedule/start/${userid}`, {cycle});
         console.log(response.data); 
   
         alert('Scheduling started successfully!');

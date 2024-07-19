@@ -22,7 +22,7 @@ const SavingsChart = ({ reward,amount, id, cycle_amount, cycle }) => {
   }, [id, cycle_amount, cycle]);
 
   const getSavedAmount = async (id) => {
-    const response = await axios.get(`http://localhost:3000/dashboard/user/${id}`);
+    const response = await axios.get(`https://goalguardian-backend.onrender.com/dashboard/user/${id}`);
     const user = response.data;
     return user.data.saved_amount;
   };

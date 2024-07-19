@@ -122,6 +122,8 @@ const Dashboard = () => {
         alert('Scheduling started successfully!');
          setTracker(true);
          setGoalButton(false);
+         navigate('/');
+         window.location.reload();
       } catch (error) {
         console.error('Error starting scheduling:', error);
         alert('Failed to start scheduling. Please try again.');

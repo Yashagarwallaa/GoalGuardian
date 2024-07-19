@@ -21,7 +21,12 @@ export function Navbar() {
     localStorage.removeItem('token'); // Clearing token from localStorage
     setIsLoggedIn(false); // Updated login state
     navigate('/');
-    window.location.reload();
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      // Mobile-specific refresh method
+      window.location = window.location.href;
+    } else {
+      window.location.reload();
+    }
   };
 
   return (

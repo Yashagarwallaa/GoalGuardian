@@ -20,7 +20,8 @@ export function Login() {
     localStorage.setItem('token', token); // Storing the token in localStorage
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
-    alert(response.data.message); 
+     alert(response.data.message + '. Please go to dashboard.'); 
+
     navigate('/')
 
     if (/Mobi|Android/i.test(navigator.userAgent)) {
@@ -47,7 +48,8 @@ export function Login() {
       localStorage.setItem('token', token); // Storing the token in localStorage
      
        axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
-      alert(response.data.message); 
+       alert(response.data.message + '. Please go to dashboard.'); 
+
       navigate('/')
 
       if (/Mobi|Android/i.test(navigator.userAgent)) {

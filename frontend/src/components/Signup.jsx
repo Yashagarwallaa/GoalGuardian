@@ -25,8 +25,14 @@ export function Signup() {
     localStorage.setItem('token', token); // Storing the token in localStorage
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
-    alert(response.data.message); 
-    window.location.href = '/dashboard'; // Redirecting to the dashboard
+    alert(response.data.message + '. Please go to dashboard.'); 
+    
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      // Mobile-specific refresh method
+      window.location = window.location.href;
+    } else {
+      window.location.reload();
+    }
   } catch (error) {
     alert(error.response.data.message);
   }

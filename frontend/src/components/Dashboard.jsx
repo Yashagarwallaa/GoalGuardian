@@ -119,7 +119,7 @@ const Dashboard = () => {
         const response = await axios.post(`https://goalguardian-backend.onrender.com/schedule/start/${userid}`, {cycle});
         console.log(response.data); 
   
-        alert('Scheduling started successfully!');
+        alert('Scheduling started successfully! Please go to dashboard');
          setTracker(true);
          setGoalButton(false);
          navigate('/');

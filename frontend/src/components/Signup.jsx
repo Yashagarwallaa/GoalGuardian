@@ -1,8 +1,11 @@
 // Login.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
+
 export function Signup() {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +29,8 @@ export function Signup() {
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
     alert(response.data.message + '. Please go to dashboard.'); 
-    
+    navigate('/')
+
     if (/Mobi|Android/i.test(navigator.userAgent)) {
       // Mobile-specific refresh method
       window.location = window.location.href;

@@ -38,7 +38,7 @@ const Dashboard = () => {
       navigate('/login');
       return;
     }
-
+ 
     const userData = getUserFromToken();
     if (userData) {
       setUser(userData.name);

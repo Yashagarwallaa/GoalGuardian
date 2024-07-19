@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
- 
+  const navigate = useNavigate();
+
   const demoentry = async()=>{
     const formData = {
       email: 'demo@gg.com',
@@ -18,7 +21,11 @@ export function Login() {
    
      axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
     alert(response.data.message); 
-    window.location.href = '/dashboard'; // Redirecting to the dashboard
+    navigate('/dashboard')
+
+    window.location.reload();
+
+
   } catch (error) {
     alert(error.response.data.message);
   }
@@ -36,7 +43,10 @@ export function Login() {
      
        axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
       alert(response.data.message); 
-      window.location.href = '/dashboard'; // Redirecting to the dashboard
+      navigate('/dashboard')
+
+      window.location.reload();
+
     } catch (error) {
       alert(error.response.data.message);
     }

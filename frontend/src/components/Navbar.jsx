@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logoimage from '../assets/gg_icon.jpg'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Check if token exists
+  
+  useEffect(()=>{
+      setIsLoggedIn(!!localStorage.getItem('token'));
+  },[localStorage.getItem('token')])
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -40,7 +45,7 @@ export function Navbar() {
               </li>
               <li>
             
-              {isLoggedIn ? (
+              {!!localStorage.getItem('token') ? (
               <Link to ="/dashboard">
                 Dashboard
               </Link>
@@ -54,7 +59,7 @@ export function Navbar() {
             </ul>
           </div>
           <div className="navbar-right">
-            {isLoggedIn ? (
+            {!!localStorage.getItem('token')? (
               <button className="sign-in" onClick={handleLogout}>
                 Logout
               </button>

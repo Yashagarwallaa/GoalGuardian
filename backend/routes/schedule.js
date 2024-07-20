@@ -23,7 +23,7 @@ const scheduledTask = async (id) => {
           y = user.reward+0.1*(user.cycle_amount);
       }
       else x = user.saved_amount+user.cycle_amount;
-
+      
       saved_amount = x;
       reward = y;
       const response = await axios.put(

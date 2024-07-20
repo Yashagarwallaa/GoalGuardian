@@ -116,7 +116,7 @@ const Dashboard = () => {
     const startGoal = async () => {
       try {
         const start = await axios.put(`https://goalguardian-backend.onrender.com/setupi/${userid}`, {upi:'ok'})
-        const response = await axios.post(`https://goalguardian-backend.onrender.com/schedule/start/${userid}`, {cycle});
+        const response = await axios.post(`http://localhost:3000/schedule/start/${userid}`, {cycle});
         console.log(response.data); 
   
         alert('Scheduling started successfully! Please go to dashboard');

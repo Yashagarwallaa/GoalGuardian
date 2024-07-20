@@ -11,7 +11,7 @@ export function Login() {
 
   const demoentry = async()=>{
     const formData = {
-      email: 'test04@gmail.com',
+      email: 'test4@gmail.com',
       password : 'Nits@2024'
     };
   try {

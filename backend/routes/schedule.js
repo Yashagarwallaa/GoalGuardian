@@ -50,7 +50,7 @@ router.post('/start/:userid', (req, res) => {
       
     // Scheduling the task to run at at this time
     if(cycle=="daily"){
-    cron.schedule('51 20 * * *', () => {
+    cron.schedule('55 20 * * *', () => {
         scheduledTask(userid);
     });}
     else if(cycle =="monthly"){

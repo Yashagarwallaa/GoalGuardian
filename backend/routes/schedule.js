@@ -27,7 +27,7 @@ const scheduledTask = async (id) => {
       saved_amount = x;
       reward = y;
       const response = await axios.put(
-        `http://localhost:3000/dashboard/user/schedule/${id}`, {saved_amount,reward},
+        `https://goalguardian-backend.onrender.com/dashboard/user/schedule/${id}`, {saved_amount,reward},
         {
             headers: {
               'Content-Type': 'application/json', 
@@ -50,7 +50,7 @@ router.post('/start/:userid', (req, res) => {
       
     // Scheduling the task to run at at this time
     if(cycle=="daily"){
-    cron.schedule('18 15 * * *', () => {
+    cron.schedule('43 6 * * *', () => {
         scheduledTask(userid);
     });}
     else if(cycle =="monthly"){

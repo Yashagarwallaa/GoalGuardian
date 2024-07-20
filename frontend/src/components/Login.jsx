@@ -11,8 +11,8 @@ export function Login() {
 
   const demoentry = async()=>{
     const formData = {
-      email: 'demo@gg.com',
-      password : 'Demo_01'
+      email: 'test04@gmail.com',
+      password : 'Nits@2024'
     };
   try {
     const response = await axios.post('https://goalguardian-backend.onrender.com/login', formData);
